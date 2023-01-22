@@ -1,56 +1,49 @@
-project_name
+Detecting and reading car plates with YOLOv5 & easyOCR
 ==============================
 
-A short description of the project.
+Script uses YOLOv5 model trained on custom dataset to detect car plates.
+Detected plates are cropped and passed to easyOCR to get readings.
+There is also implemented simple object tracking to make sure that
+the displayed solutions are not mixed on a video/camera device
 
 Project Organization
 ------------
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+├── README.md          <- The top-level README for developers using this project.
+│
+├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
+│                         generated with `pip freeze > requirements.txt`
+│
+├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
+│
+├── Car_plates_reading      <- Source code for use in this project.
+│   ├── __init__.py    <- Makes src a Python module
+│   │
+│   ├── data                     <- Scripts to handle data
+│   │   └── create_yaml.py       <- Creates .yaml file required for yolo training 
+│   │   └── get_annotations.py   <- Read annotations as dataframe
+│   │   └── get_labels.py        <- Read labels and add to dataframe
+│   │   └── parse_data.py        <- Data parser
+│   │   └── split_data.py        <- Splits data into training and validation dirs
+│   │
+│   ├── features                     <- Scripts to turn raw data into features for modeling
+│   │   └── choose_loading.py        <- Used to choose between training and loading model
+│   │   └── choose_mode.py           <- Choose mode to use
+│   │   └── cv2_handling.py          <- Cv2 script to detect pkates on a video/camera
+│   │   └── get_latest_weights.py    <- Load latest weights
+│   │   └── image_mode.py            <- Script to detect plates on an image
+│   │   └── plate_tracking.py        <- Simple plates tracking for video/camera mode
+│   │
+│   ├── model                  <- Scripts to train/load model
+│   │   │── train_model.py     <- Train new model               
+│   │   ├── load_model.py      <- Load existing weights to the model
+│   │
+└── tox.ini            <- tox file with settings for running tox
 
+--------
+
+Sample dataset:
+https://www.kaggle.com/datasets/andrewmvd/car-plate-detection
 
 --------
 
